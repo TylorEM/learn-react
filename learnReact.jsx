@@ -199,3 +199,43 @@ const getDropdownMenu = () => {
 // Sample usage
 
 console.log(getDropdownMenu());
+
+//---------------------------------------------------------
+
+//* User Avatar
+
+import React from 'react';
+
+const getUserAvatar = (path) => {
+  return <img src={path} alt="path" />;
+};
+
+// Sample usage
+
+const url =
+  'https://res.cloudinary.com/dbfn5lnvx/image/upload/v1576923026/react-tutorial/misc/user.png';
+
+console.log(getUserAvatar(url));
+//---------------------------------------------------------
+
+//* Footer
+
+import React from 'react';
+
+const getFooter = () => {
+  return (
+    <>
+      <h3>Your online supermarket</h3>
+      <ul>
+        <li>Contacts</li>
+        <li>Press</li>
+        <li>About</li>
+      </ul>
+      <p>All rights reserved &copy;</p>
+    </>
+  );
+};
+
+// Sample usage
+
+console.log(getFooter());
