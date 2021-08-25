@@ -239,3 +239,67 @@ const getFooter = () => {
 // Sample usage
 
 console.log(getFooter());
+//---------------------------------------------------------
+
+//* Hero Component
+
+import React from 'react';
+import { render } from 'react-dom';
+
+const Hero = () => {
+  return (
+    <>
+      <h1>Welcome to our supermarket</h1>
+      <p>Start shopping</p>
+    </>
+  );
+};
+
+// Sample usage
+
+render(<Hero />, document.querySelector('#react-root'));
+
+//---------------------------------------------------------
+
+//* Navbar Component
+
+import React from 'react';
+import { render } from 'react-dom';
+
+const Navbar = () => {
+  return (
+    <>
+      <h3>Supermarket</h3>
+      <p>Start shopping</p>
+    </>
+  );
+};
+
+const root = document.querySelector('#react-root');
+render(<Navbar />, root);
+//---------------------------------------------------------
+
+//* One Component per file
+
+//? index.js
+
+import React from 'react';
+import { render } from 'react-dom';
+import Hero from './Hero.js';
+
+const root = document.querySelector('#react-root');
+
+render(<Hero />, root);
+
+//? Hero.js
+
+import React from 'react';
+
+const Hero = () => {
+  return (
+    <>
+      <h1 className="title">Supermarket</h1>
+      <p>Start shopping</p>
+    </>
+  );
+};
