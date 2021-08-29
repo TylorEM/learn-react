@@ -303,3 +303,48 @@ const Hero = () => {
     </>
   );
 };
+
+export default Hero;
+
+//---------------------------------------------------------
+
+//* Multiple Components
+
+//? index.js
+
+import React from 'react';
+import { render } from 'react-dom';
+import Button from './Button.js';
+import Link from './Link.js';
+
+const App = () => {
+  return(
+    <>
+      <Button />
+      <Button />
+      <Link />
+    </>
+  )
+};
+
+//? Button.js
+
+import React from 'react';
+
+const Button = () => {
+  return <button>Button text</button>;
+};
+
+export default Button;
+
+//? Link.js
+
+import React from 'react';
+
+const Link = () => {
+  return <a href="#">Link text</a>;
+};
+
+export default Link;
+
+//---------------------------------------------------------
