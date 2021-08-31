@@ -347,4 +347,184 @@ const Link = () => {
 
 export default Link;
 
+// Sample usage
+render(<App />, document.querySelector('#react-root'))
+
 //---------------------------------------------------------
+  
+//* Shopping Cart
+
+import React from 'react';
+import {render} from 'react-dom';
+
+const ShoppingCart = ({count}) => {
+  return (
+    <div>{count} items in your cart</div>
+  )
+}
+
+const root = document.querySelector('#react-root')
+render(<ShoppingCart count={4} />, root)
+
+//---------------------------------------------------------
+
+//* More props
+
+import React from 'react'
+import {render} from 'react-dom'
+
+const Navbar = ({notifications, user}) => {
+  return (
+    <>
+      <div>Welcome {user.firstName} {user.lastName}</div>
+      <p>You've got {notifications.length} notifications</p>
+    </>
+  );
+  
+}
+
+let notifications = [{
+  id: 1,
+  text: 'Order delivered'
+},{
+  id: 2,
+  text: 'Order received'
+}];
+
+const user = {
+  firstName: 'Tylor',
+  lastName: 'Marshall'
+}
+
+const root = document.querySelector('#react-root')
+render(<Navbar notifications={notification} user={user} />, root)
+
+//---------------------------------------------------------
+
+//* Button I
+
+import React from 'react';
+import {render} from 'react-dom';
+
+const Button = ({size}) => {
+  if (!size) {
+    return <button className='btn-medium'>Text here</button>
+  }
+
+  return (
+    <button className={`btn-${size}`}>Text here</button>
+  )
+}
+
+const root = document.querySelector('#react-root');
+render(< size='small' />, root);
+
+//--------------------------------------------------------
+
+//* Button II
+
+import React from 'react'
+import {render} from 'react-dom'
+
+const Button = (props) => {
+  return (
+    <button>{props.children}</button>
+  )
+}
+
+const root = document.querySelector('#react-root')
+
+render(<Button>Login</Button>, root)
+
+//-------------------------------------------------------
+
+//* Destructuring props
+
+import React from 'react'
+import {render} from 'react-dom'
+
+const Button = ({className, children}) => {
+  return (
+    <button className={className}>{children}</button>
+  )
+}
+
+const root = document.querySelector('#react-root')
+
+render(<Button className='primary'>Login</Button>, root)
+
+//-------------------------------------------------------
+
+//* UI Kit
+
+//? index.js
+
+import React from 'react'
+import {render} from 'react-dom'
+import Link from './Link.js'
+import Button from './Button.js'
+import Container from './Container.js'
+import Input from './Input.js'
+
+const App = () => {
+  return (
+    <>
+      <Container>
+        <Link />
+        <Button type='submit' disabled={false} >Shopping online</Button>
+        <Input type='email'/>
+      </Container>
+    </>
+  )
+}
+
+render(<App />, document.querySelector('#react-root'))
+
+//? Button.js
+
+import React from 'react'
+
+const Button = ({type, disabled, children})=> {
+  return (
+    <button type={type} disabled={disabled} className='ui-button'>{children}</button>
+  )
+}
+
+export default Button
+
+//? Container.js
+
+import React from 'react'
+
+const Container = ({children}) => {
+  return (
+    <div className='ui-container'>{children}</div>
+  )
+}
+
+export default Container
+
+//? Input.js
+
+import React from 'react'
+
+const Input = ({type='text'}) => {
+  return (
+    <input type={type} placeholder='input text' name='input' className='ui-textfield'/>
+  )
+}
+
+export default Input
+
+//? Link.js
+
+import React from 'react'
+
+const Link = ({href, children}) => {
+  return (
+    <a className='ui-link' href={href}>{children}</a>
+  )
+}
+
+export default Link
+
