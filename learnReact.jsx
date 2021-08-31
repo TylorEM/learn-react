@@ -417,7 +417,7 @@ const Button = ({size}) => {
 }
 
 const root = document.querySelector('#react-root');
-render(< size='small' />, root);
+render(<Button size='small' />, root);
 
 //--------------------------------------------------------
 
@@ -528,3 +528,80 @@ const Link = ({href, children}) => {
 
 export default Link
 
+//-------------------------------------------------------
+
+//*Impure to Pure
+
+import React from 'react'
+import {render} from 'react-dom'
+
+const Navbar = (props) => {
+  const fullName = `${props.user.first_name} ${props.user.last_name}`;
+
+  return(
+    <div>Hello {fullName}.<br /> You are now {props.user.ag + 1} years old.</div>
+  )
+} 
+
+const user = {
+  first_name: 'Tylor',
+  last_name: 'Marshall',
+  age: 26
+}
+
+render(
+  <>
+    <Navbar user={user} />
+    <Navbar user={user} />
+  </>, document.querySelector('#react-root')
+)
+
+//-------------------------------------------------------
+
+//* Conditional rendering
+
+import React from 'react'
+import {render} from 'react-dom'
+
+const WelcomeUser = ({user}) => {
+  if (!user) {
+    return null
+  }
+  return (
+    <h1>Welcome {user.name}</h1>
+  )
+}
+
+const user = {
+  id: 1,
+  name: 'Tylor Marshall'
+}
+
+const root = document.querySelector('#react-root')
+
+render(<>
+  <WelcomeUser user={user} />
+  <WelcomeUser />
+</>, root)
+
+//-------------------------------------------------------
+
+//* Dark theme I
+
+import React from 'react'
+import {render} from 'react-dom'
+
+const Navbar = ({theme, children}) => {
+  if (theme !== 'dark') {
+    return <h1 className='light'>{children}</h1>
+  }
+  return <h1 className='dark'>{children}</h1>
+}
+
+const root = document.querySelector('#react-root')
+
+render(
+<>
+  <Navbar theme='dark'>Online supermarket</Navbar>
+  <Navbar theme='light'>Online supermarket</Navbar>
+</>, root)
