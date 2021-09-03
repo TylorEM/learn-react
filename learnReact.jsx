@@ -605,3 +605,139 @@ render(
   <Navbar theme='dark'>Online supermarket</Navbar>
   <Navbar theme='light'>Online supermarket</Navbar>
 </>, root)
+
+//-------------------------------------------------------
+
+//* Dark theme II
+
+import React from 'react'
+import {render} from 'react-dom'
+import clsx from 'clsx'
+
+const Navbar = ({theme}) => {
+  const className= clsx({'dark': theme === 'dark', 'light': theme === 'light'})
+  return <h1 className={`navbar ${className}`}>Online supermarket</h1>
+}
+
+const root = document.querySelector('#react-root')
+
+render(
+  <>
+    <Navbar theme='light' />
+    <Navbar theme='dark' />
+  </>, root
+)
+
+//-------------------------------------------------------
+
+//* UI Kit > Button
+
+import React from 'react'
+import {render} from 'react-dom'
+import Button from './Button.js'
+
+//? index.js
+
+const App = () => {
+  return (
+    <>
+      <Button tabIndex='2' disabled={true}>Login</Button>
+      <Button className='ui-button'>Register</Button>
+    </>
+  )
+}
+
+render(<App />, document.querySelector('#react-root'))
+
+//? Button.js
+
+import React from 'react'
+
+const Button = ({children , ...rest}) => {
+  return (
+    <button {...rest}>{children}</button>
+  )
+}
+
+export default Button
+
+//-------------------------------------------------------
+
+//* Improved UI Kit
+
+//! When using clsx below I was adding curly brackets around the className aspect of the clsx 'classes' variable, which is not needed. The curly brackets only need to be used when adding dynamic props within the element you wish to return.
+
+//? index.js
+
+import React from 'react'
+import {render} from 'react-dom'
+
+import Link from './Link.js'
+import Container from './Container.js'
+import Button from './Button.js'
+import Input from './Input.js'
+
+const App = () => {
+  return (
+    <>
+      <Container className='app'>
+        <Link href='#'>React Tutorial</Link>
+        <Button disabled={true}>Login</Button> 
+        <Input placeholder='Full Name' name='full_name' />
+      </Container>
+    </>
+  )
+}
+
+render(<App />, document.querySelector('#react-root'))
+
+//? Button.js
+
+import React from 'react'
+import clsx from 'clsx'
+
+const Button = ({className, children, ...rest}) => {
+  const classes = clsx('ui-button', className)
+  return (
+    <button className={classes} {...rest}>{children}</button>
+  )
+}
+
+export default Button
+
+//? Container.js
+
+import React from 'react'
+
+const Container = ({className, children, ...rest}) => {
+  const classes = clsx('ui-container', className)
+  return (
+    <div className={classes} {...rest}>{children}</div>
+  )
+}
+
+export default Container
+
+//? Input.js
+
+import React from 'react'
+import clsx from 'clsx'
+
+const Input = ({className, type='text', ...rest}) => {
+  const classes = clsx('ui-textfield', className)
+  return <input className={classes} type={type} {...rest} />
+}
+
+export default Input
+
+//? Link.js
+
+import React from 'react'
+import clsx from 'clsx'
+
+const Link = ({className, children, ...rest}) => {
+  const classes = clsx('ui-link', className)
+  return <a className={classes} {...rest}>{children}</a>
+}
+
+export default Link
