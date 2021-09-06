@@ -741,3 +741,85 @@ const Link = ({className, children, ...rest}) => {
 }
 
 export default Link
+
+//------------------------------------------------------
+
+//* Array destructuring I
+
+const printFullName = (name) => {
+  console.log(name)
+  const [first, last] = name
+  return `${first} ${last}`
+}
+
+console.log(printFullName(['Tylor', 'Marshall']))
+console.log(printFullName(['Alexus', 'Graham']))
+
+//------------------------------------------------------
+
+//* Array destructuring II 
+
+const printUserDetails = user => {
+  console.log(user)
+  const [name, age] = user
+
+  return `${name} is ${age} years old.`
+}
+
+console.log(printUserDetails(['Tylor', 26]))
+console.log(printUserDetails(['Alexus', 23]))
+
+//------------------------------------------------------
+
+//* Destructuring from functions
+
+//? index.js
+
+import getAge from './helpers.js'
+
+const destructureTest  = () => {
+  const [age, describeAge] = getAge()
+}
+
+//? helper.js 
+
+const getAge = () => {
+  const age = 26
+
+  const describeAge = () => {
+    return `The age is ${age} years old` 
+  }
+
+  return [age, describeAge]
+}
+
+export default getAge
+
+
+//------------------------------------------------------
+
+//* Destructuring from function II
+
+//? index.js
+
+import getPrice from './helpers.js'
+
+const destructureTest = () => {
+  const [price, describePice] = getPrice()
+
+  console.log(price)
+  console.log(describePrice())
+}
+
+//? helpers.js
+
+const getPrice = () => {
+  const price = 2
+  const describePrice = () => {
+    return `The price is $${price}.`
+  }
+
+  return [price, describePrice]
+}
+
+//------------------------------------------------------
