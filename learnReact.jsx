@@ -951,10 +951,96 @@ const getUser = (age) => {
   const getCanVote = () =>{
     return age >= 18
   }
-  
+
   return {
     canVote : getCanVote()
   }
 }
 
 console.log(getUser(21))
+
+//---------------------------------------------------------
+
+//* Change event
+
+import React from 'react'
+import {render} from 'react-dom'
+
+const Navbar = () => {
+  const handleSelectChange = () => {
+    console.log('Country changed')
+  }
+
+  return (
+      <select className='countries' onChange={handleSelectChange}>
+        <option>Netherlands</option>
+        <option>Belgium</option>
+        <option>France</option>
+      </select> 
+    )
+}
+
+render(<Navbar />, document.querySelector('#react-root'))
+
+//---------------------------------------------------------
+
+//* Name event handler
+
+import React from 'react'
+import {render} from 'react-dom'
+
+const Counter = () => {
+  const handleConsoleLogClick= () => {
+    console.log('Button clicked')
+  }
+  return <button onClick={handleConsoleLogClick}>Add 1</button>
+}
+
+const root = document.querySelector('#react-root')
+
+render(<Counter/>, root)
+
+//---------------------------------------------------------
+
+//* Counter
+
+import React, {useState} from 'react'
+import {render} from 'react-dom'
+
+const Counter = () => {
+  const [times, setTimes] = useState(0)
+
+  const handleIncrementClick = () => {
+    setTimes(times + 1)
+  }
+
+  return (<> 
+    <h2>{times} times clicked</h2>   
+    <button onClick={handleIncrementClick}>Add 1</button>
+  </>)
+}
+
+render(<Counter />, document.querySelector('#react-root'))
+
+//---------------------------------------------------------
+
+//* Countdown
+
+import React, {useState} from 'react'
+import {render} from 'react-dom'
+
+const Countdown = () => {
+  const [count, setCount] = useState(10)
+
+  function handleDecrementClick() {
+    setCount(count - 1)
+  }
+
+  return (<>
+    <h2>{count} times remaining</h2> 
+    <button onClick={handleDecrementClick}></button>
+  </>)
+}
+
+const root = document.querySelector('#react-root')
+render(<Countdown />, root)
