@@ -1044,3 +1044,29 @@ const Countdown = () => {
 
 const root = document.querySelector('#react-root')
 render(<Countdown />, root)
+
+//---------------------------------------------------------
+
+//* Proper Countdown
+
+//! When doing this challenge, at first, I had tried to use "disabled" as a prop with the value of false in order to pass it into the handleDecrementClick function within a separate if conditional statement - if (counter === 0) {disabled === true}. I added the disabled prop to the button with a value of {disabled} and it did not work.
+
+import React , {useState} from 'react'
+import {render} from 'react-dom'
+
+const Countdown = () => {
+  const [counter, setCounter] = useState(5)
+
+  function handleDecrementClick() {
+    if (counter > 0) {
+      setCounter(counter - 1)
+    } 
+  }
+
+  return (<>
+    <h2>{counter} times remaining</h2> 
+    <button onClick={handleDecrementClick} disabled={counter === 0}>Countdown</button>
+  </>)
+}
+
+render(<Countdown />, document.querySelector('#react-root'))
