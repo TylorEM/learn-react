@@ -856,4 +856,105 @@ render(<Countdown />, document.querySelector('#react-root'))
 
 //------------------------------------------------------
 
+//* Click to log
 
+import React from 'react'
+import {render} from 'react-dom' 
+
+const App = () => {
+  return <button onClick={() => console.log('Hello World!')}>click me</button>
+}
+
+render(<App />, document.querySelector('#react-root'))
+
+//---------------------------------------------------------
+
+//* Counter
+
+import React, {useState} from 'react'
+import {render} from 'react-dom'
+
+const Counter = () => {
+  const [clicked, setClicked] = useState(0)
+
+  return (
+    <>
+      <h2>{clicked} times clicked</h2>
+      <button onClick={() => setClicked(clicked + 1)}>Add 1</button>
+    </>
+  )
+}
+
+render(<Counter />, document.querySelector('#react-root'))
+
+//---------------------------------------------------------
+
+//* Countdown
+
+import React, {useState} from 'react'
+import {render} from 'react-dom'
+
+const Countdown = () => {
+  const [times, setTimes] = useState(10)
+
+  return (<>
+    <h2>{times} times remaining</h2> 
+    <button onClick={() => setTimes(times - 1)}></button>
+  </>)
+}
+
+render(<Countdown />, document.querySelector('#react-root'))
+
+//---------------------------------------------------------
+
+//* Broken counter
+
+import React, {useState} from 'react'
+import {render} from 'react-dom' 
+
+const Counter = () => {
+  const [count, setCount] = useState(0)
+
+  return (
+    <>
+      <div>{count} times clicked</div>
+      <button onClick={() => setCount(count + 1)}></button>
+    </>
+  )
+}
+
+render(<Counter />, document.querySelector('#react-root'))
+
+//---------------------------------------------------------
+
+//* Closures I
+
+const getUser = (firstName, lastName) => {
+  const getFullName = () => {
+    return (`${firstName} ${lastName}`)
+  }
+
+  return {
+    firstName: firstName,
+    lastName: lastName,
+    fullName: getFullName()
+  }
+}
+
+console.log(getUser('Tylor', 'Marshall'))
+
+//---------------------------------------------------------
+
+//* Closures II
+
+const getUser = (age) => {
+  const getCanVote = () =>{
+    return age >= 18
+  }
+  
+  return {
+    canVote : getCanVote()
+  }
+}
+
+console.log(getUser(21))
