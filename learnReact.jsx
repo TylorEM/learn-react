@@ -1070,3 +1070,105 @@ const Countdown = () => {
 }
 
 render(<Countdown />, document.querySelector('#react-root'))
+
+//---------------------------------------------------------
+
+//* Resetting Clock
+
+//! When doing this challenge I had seconds, within the if statement, === to 60, thinking that when seconds reached 60 the setSeconds would render to 0. This is the wrong thought process because you have think about where this event handler is attached/what kind of event it is. It is attached to a button and is an onClick event. Meaning that the correct way to think about this is if the button is clicked while the value of seconds === 59 then setSeconds renders to 0.
+
+import React, {useState} from 'react'
+import {render} from 'react-dom'
+
+const Clock = () => {
+  const [seconds, setSeconds] = useState(0)
+
+  function handleIncrementClick() {
+    if (seconds === 59) {
+     setSeconds(0)
+    } else {
+      setSeconds(seconds + 1)
+    }
+  }
+
+  return (<>
+    <h1>{seconds} seconds</h1> 
+    <button onClick={handleIncrementClick}>Add 1</button>
+  </>)
+}
+
+//---------------------------------------------------------
+
+//* Counter with modes
+
+import React, {useState} from 'react'
+import {render} from 'react-dom'
+
+const Counter = ({mode}) => {
+  const [counter, setCounter] = useState(0) 
+
+  function handleButtonClick() {
+    if(mode === 'increment') {
+      setCounter(counter + 1)
+    } else if (mode === 'decrement') {
+      setCounter(counter - 1)
+    }
+  }
+
+  return (<>
+    <h2>{mode}ing counter</h2> 
+    <h3>{counter} times</h3>
+    <button onClick={handleButtonClick}>{mode}</button>
+  </>)
+}
+
+const root = document.querySelector("#react-root")
+
+//? Sample Usage
+
+render(<>
+  <Counter mode='increment'/>
+  <Counter mode='decrement'/>
+</>, root)
+
+
+
+//---------------------------------------------------------
+
+//* Configurable Counter
+
+import React, {useState} from 'react';
+import {render} from 'react-dom'
+
+const Counter = ({incrementBy}) => {
+  const [counter, setCounter] = useState(0)
+  
+  function handleButtonClick() {
+
+    setCounter(counter + incrementBy)
+
+    //if (incrementBy === 1) {
+    //  setCounter(counter + 1)
+    //} else if (incrementBy === 5) {
+    //  setCounter(counter + 5)
+    //} else if (incrementBy === 2) {
+    //  setCounter(counter + 2) 
+    //}
+  }
+
+  return (<>
+    <h2>{counter} times clicked</h2> 
+    <button onClick={handleButtonClick}>Add {incrementBy}</button>
+  </>)
+}
+
+const root = document.querySelector('#react-root')
+
+
+//? Sample Usage
+
+render(<>
+  <Counter incrementBy={1} />
+  <Counter incrementBy={5} />
+  <Counter incrementBy={2} />
+</>, root)
