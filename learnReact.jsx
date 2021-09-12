@@ -1172,3 +1172,99 @@ render(<>
   <Counter incrementBy={5} />
   <Counter incrementBy={2} />
 </>, root)
+
+//---------------------------------------------------------
+
+//* Admin permission
+
+//? NoPermission.js
+
+import React from 'react';
+
+const NoPermission = () => {
+  return (<>
+    <h3>Not allowed</h3> 
+    <p>
+      You do not have permission to access this page. <br />
+      Please contact your account manager
+    </p>
+  </>)
+}
+
+export default NoPermission
+
+//?index.js
+
+import React from 'react'
+import {render} from 'react-dom'
+import NoPermission from './NoPermission.js'
+
+const Admin = ({userType}) => {
+  if (userType === 'client') {
+    return <NoPermission />
+  }
+  
+  return ( <>
+    <h2>Welcome Admin</h2> 
+    <p>The Admin portal allows you to manage all your items</p>
+  </>)
+}
+
+//? Sample usage
+
+render(<>
+<Admin userType='admin' />
+<Admin userType='client' />
+</>, document.querySelector('#react-root'))
+
+//---------------------------------------------------------
+
+//* Dashboard
+
+import React from 'react'
+import {render} from 'react-dom'
+
+const Dashboard = ({loggedIn}) => {
+  const isLoggedIn = <h1>Welcome back!</h1>
+  const notLoggedIn = <h1>Welcome.</h1>
+
+  return <div className="container">{loggedIn ? isLoggedIn : notLoggedIn }</div>
+}
+
+render(<>
+  <Dashboard loggedIn={true} />
+  <Dashboard loggedIn={false} />
+</>, document.querySelector('#react-root'))
+
+//---------------------------------------------------------
+
+//* Navbar notifications
+
+import React from 'react'
+import {render} from 'react-dom'
+
+const Navbar = ({notifications}) => {
+  return <>
+    <h2>Welcome user</h2> 
+    {notifications.length > 0 && <p>You've got {notifications.length} notifications</p>}
+  </>
+}
+
+//? Sample usage
+
+const notifications = [{
+  id: 1,
+    text: "Welcome to our supermarket"
+}, {
+    id: 2,
+    text: "Your order has shipped"
+}, {
+    id: 3,
+    text: "Your order has shipped"
+}];
+render(<>
+    <Navbar notifications={[]} />
+    <Navbar notifications={notifications} />
+</>, document.querySelector("#react-root"));
+
+
