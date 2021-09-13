@@ -1268,3 +1268,72 @@ render(<>
 </>, document.querySelector("#react-root"));
 
 
+//---------------------------------------------------------
+
+//* My first Online Store
+
+//? index.js
+
+import React, {useState} from 'react'
+import {render} from 'react-dom'
+import StoreFront from './StoreFront.js'
+
+const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  
+  function handleLoginClick() {
+    setIsLoggedIn(true)
+  }
+  
+  function handleLogoutClick() {
+    setIsLoggedIn(false)
+  }
+
+  if (!isLoggedIn) {
+      return (<>
+        <h2>Please Login</h2> 
+        <button onClick={handleLoginClick}>Login</button>
+      </>) 
+    }
+
+  return (<>
+    <StoreFront />
+    <button onClick={handleLogoutClick}>Logout</button>
+  </>) 
+}
+
+//? Product.js
+
+const Product = ({details}) => {
+  return (<>
+    <img src={details.image} alt={details.name} />
+    <h2>{details.name}</h2> 
+    <p>{details.description}</p>
+
+    {/* Add increment and decrement Counter */}
+  </>)
+}
+
+//? StoreFront.js
+  
+import Product from './Product.js'
+
+const StoreFront = () => {
+
+  const products = [{
+    name: 'Cheese',
+    description: '200g cheese block',
+    image: 'https://res.cloudinary.com/dbfn5lnvx/image/upload/q_auto,w_300/v1580649404/react-tutorial/products/cheese.png'
+  }, {
+    name: 'Milk',
+    description: '1L of milk',
+    image: 'https://res.cloudinary.com/dbfn5lnvx/image/upload/q_auto,w_300/v1580649400/react-tutorial/products/milk.png'
+  }]
+
+  return (<div>
+    <Product details={products[0]} /> 
+    <Product details={products[1]} />
+  </div>)
+}
+
+export default StoreFront 
