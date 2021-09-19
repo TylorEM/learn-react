@@ -1291,7 +1291,7 @@ const App = () => {
 
   if (!isLoggedIn) {
       return (<>
-        <h2>Please Login</h2> 
+        <h2>Please login</h2> 
         <button onClick={handleLoginClick}>Login</button>
       </>) 
     }
@@ -1302,17 +1302,38 @@ const App = () => {
   </>) 
 }
 
+render(<App />, document.querySelector('#react-root'))
+
 //? Product.js
 
 const Product = ({details}) => {
-  return (<>
-    <img src={details.image} alt={details.name} />
-    <h2>{details.name}</h2> 
-    <p>{details.description}</p>
+  const [counter, setCounter] = useState(0)
 
-    {/* Add increment and decrement Counter */}
-  </>)
+  function handleIncrementClick() {
+      setCounter(counter + 1)
+  }
+  
+  function handleDecrementClick() {
+    if (counter > 0) {
+      setCounter(counter - 1)
+    }
+  }
+
+  return (<div>
+    <img src={details.image} alt={details.name} />
+    <div>
+      <h2>{details.name}</h2> 
+      <p>{details.description}</p>
+    </div>
+    <div>
+      <button onClick={handleDecrementClick} disabled={count === 0}>-</button>
+      <h3>{count ? count : ""}</h3>
+      <button onClick={handleIncrementClick}>+</button>
+    </div>
+  </div>)
 }
+
+export default Product
 
 //? StoreFront.js
   
@@ -1337,3 +1358,247 @@ const StoreFront = () => {
 }
 
 export default StoreFront 
+
+//---------------------------------------------------------
+
+//* Countdown with lives
+
+import React, {useState} from 'react';
+import {render} from 'react-dom'
+
+const Countdown = () => {
+  const [attempts, setAttempts] = useState(5)
+  const [lives, setLives] = useState(3)
+
+  function handleCountClick() {
+    if (attempts > 0) {
+      setAttempts(attempts - 1)
+    } else if (attempts === 0) {
+      setAttempts(5)
+      setLives(lives - 1)
+    }
+  }
+
+  return (<>
+    <h2>Attempts remaining: {attempts}</h2> 
+    <button onClick={handleCountClick} disabled={attempts === 0 && lives === 0}>Count down</button>
+    <h3>Lives remaining: {lives}</h3>
+  </>)
+}
+
+
+//---------------------------------------------------------
+
+//* Conditional counter
+
+import React, {useState} from 'react'
+import {render} from 'react-dom'
+
+const Counter = ({enabled}) => {
+  const [count, setCount] = useState(5)
+
+  function handleDecrementClick() {
+    if (enabled){
+      setCount(count - 1)
+    }    
+  }
+
+  return (<>
+    <h2>Attempts remaining: {count}</h2> 
+    <button onClick={handleDecrementClick} disabled={count === 0}>Count down</button>
+  </>)
+}
+
+//? Sample usage
+
+render(<>
+  <Counter enabled={true} />
+  <Counter enabled={false} />
+</>, document.querySelector('#react-root'))
+
+//---------------------------------------------------------
+
+//* Fake React implementation
+
+import {useState} from 'react'
+
+const WrongComponent = () => {
+  const [data, setData] = useState([])
+
+  data.push(5)
+  setData(data)
+}
+
+const CorrectComponent = () => {
+  const [data, setData] = useState([])
+
+}
+
+
+//---------------------------------------------------------
+
+//* Immutable Add I
+
+const addApp = (apps, app) => {
+  return [...apps, app]
+}
+
+//* Sample usage
+
+const apps1 = ["Calculator", "Phone"]
+const newApps1 = addApp(apps1, "Preferences")
+console.log(newApps1)
+
+//  check if the operation was immutable 
+console.log(newApps1 === apps1)
+// immutable when it returns false
+
+const app2 = ["Twitter", "Instagram"]
+const newApp2 = addApp(app2, "Facebook")
+console.log(newApp2)
+
+//---------------------------------------------------------
+
+//* Immutable Add II
+
+const addApp = (apps, app) => {
+  return [app, ...apps]
+}
+
+//* Sample usage
+
+const cryptos = ["BTC", "ETH", "LINK"]
+const addCrypto = addApp([...cryptos], "ADA")
+
+console.log(addCrypto)
+//---------------------------------------------------------
+
+//* Immutable Update
+
+const replaceApp = (apps, oldApp, newApp) => {
+  console.log(apps)
+  return apps.map(app => {
+    if (app === oldApp) {
+      return newApp
+    }
+    return app
+  })
+}
+
+//? Sample usage
+const apps1 = ["Calculator", "Whatsapp"];
+// Replace Calculator with Phone
+const newApps1 = replaceApp(apps1, "Calculator", "Phone");
+console.log(newApps1);
+// check if the operation was immutable
+console.log(newApps1 === apps1); // immutable when it returns false
+
+const apps2 = ["Whatsapp", "Calculator"];
+// Replace Whatsapp with Maps
+const newApps2 = replaceApp(apps2, "Whatsapp", "Maps");
+console.log(newApps2);
+// check if the operation was immutable
+console.log(newApps2 === apps2); // immutable when it returns false
+
+//---------------------------------------------------------
+
+//* Immutable Remove
+
+const removeApp = (apps, appToRemove) => {
+  return apps.filter(app => {
+     console.log(app) 
+     return app !== appToRemove
+  })
+}
+
+// Sample usage
+const apps1 = ["Calculator", "Phone"];
+// Remove Calculator
+const newApps1 = removeApp(apps1, "Calculator");
+console.log(newApps1);
+// check if the operation was immutable
+console.log(newApps1 === apps1); // immutable when it returns false
+
+const apps2 = ["Whatsapp", "Maps", "Calculator"];
+// Remove Maps
+const newApps2 = removeApp(apps2, "Maps");
+console.log(newApps2);
+// check if the operation was immutable
+console.log(newApps2 === apps2); // immutable when it returns false
+
+//---------------------------------------------------------
+
+//* List Apps
+
+import React from 'react'
+import {render} from 'react-dom'
+
+const Apps = ({items}) => {
+  return (
+    <ul>
+      {items.map(item => <li key={item}>{item}</li>)}
+    </ul>
+  )
+}
+
+//? Sample usage
+
+const apps = ['calculator', 'Phone', 'Message', 'Maps']
+render(<Apps items={apps} />, document.querySelector('#react-root'))
+
+//---------------------------------------------------------
+
+//* List Products
+
+import React, {useState} from 'react'
+import {render} from 'react-dom'
+
+const Products = () => {
+  const [products, setProducts] = useState(['Almond', 'Cashew', 'Rice', 'Water'])
+
+  return (
+    <ul>
+      {products.map((product, index) => <li key={index}>{product}</li>)}
+    </ul>
+  )
+}
+
+render(<Products />, document.querySelector('#react-root'))
+
+//---------------------------------------------------------
+
+//* Shopping Wallet
+
+import React, {useState} from 'react'
+import {render} from 'react-dom'
+
+const Wallet = () => {
+  const [transactions, setTransactions] = useState([])
+
+
+  function handleDepositClick() {
+    setTransactions([...transactions, 10])
+  }
+
+  function handleWithdrawClick() {
+    setTransactions([...transactions, -10])
+  }
+
+  function handleResetClick() {
+    setTransactions([])
+  }
+
+  return(
+    <>
+      <button onClick={handleDepositClick}>Deposit 10</button>
+      <button onClick={handleWithdrawClick}>Withdraw 10</button>
+      <h2>Total: {transactions.reduce((transaction, current) => transaction += current, 0)}</h2>  
+      <button onClick={handleResetClick}>Reset</button>
+      <ul>
+        {transactions.map((transaction, index) => <li key={index}>{transaction}</li>)}
+      </ul>
+    </>
+  )
+}
+
+render(<Wallet />, document.querySelector('#react-root'))
