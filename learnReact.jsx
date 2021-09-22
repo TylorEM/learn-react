@@ -1602,3 +1602,206 @@ const Wallet = () => {
 }
 
 render(<Wallet />, document.querySelector('#react-root'))
+
+//---------------------------------------------------------
+
+//* Undo action
+
+import React, {useState} from 'react'
+import {render} from 'react-dom'
+
+const Wallet = () => {
+  const [transactions, setTransactions] = useState([])
+
+  function handleDepositClick() {
+    setTransactions([...transactions, transactions.length + 1])
+  } 
+
+  function handleUndoClick() {
+    setTransactions(transactions.slice(0, transactions.length - 1))
+  }
+
+  return (
+    <>
+      <button onClick={handleDepositClick}>Deposit</button>
+      <button onClick={handleUndoClick}>Undo</button>
+      <ul>
+        {transactions.map((transaction, index) => <li key={index}>{transaction}</li>)}
+      </ul>
+    </>
+  )
+}
+
+render(<Wallet />, document.querySelector('#react-root'))
+
+//---------------------------------------------------------
+
+//* Attach User Type
+
+const attachUserType = (user, type) => {
+  return {...user, type: type}
+}
+
+//? Sample usage
+const user1 = {
+  name: 'Tylor',
+  has_paid: true
+}
+const newUser1 = attachUserType(user1, "admin")
+// check if the operation was immutable
+console.log(newUser1 === user1)
+// immutable when it returns false
+
+//---------------------------------------------------------
+
+//* Attach Timestamps
+
+const attachTimestamps= (user) => {
+  return {...user, created_at: new Date(), updated_at: new Date()}
+}
+
+//? Sample usage
+const testUser = {
+  id: 29,
+  name: 'Tylor',
+  type: 'admin'
+}
+
+const newUser = attachTimestamps(testUser)
+console.log(newUser)
+
+//---------------------------------------------------------
+
+//* Make Admin
+
+const makeAdmin = (user) => {
+   return {...user, type: 'admin'} 
+}
+
+//? Sample usage
+const user1 = {
+  name: 'Sam',
+  type: 'member'
+}
+
+const newUser1 = makeAdmin(user1)
+console.log(newUser1)
+
+//---------------------------------------------------------
+
+//* Remove ID
+
+const removeId = (user) => {
+  const {id, ...rest} = user
+  return rest
+}
+
+//? Sample usage
+
+const user1 = {
+  id: 1, 
+  name: 'Sam',
+  type: 'member'
+}
+
+const newUser1 = removeId(user1)
+
+//---------------------------------------------------------
+
+//* Dark mode toggle
+
+import React, {useState} from 'react'
+import {render} from 'react-dom'
+
+const App = () => {
+  const [settings, setSettings] = useState({
+    title: 'Content here',
+    dark_theme: true
+  })
+
+  function handleToggleClick() {
+    setSettings({...settings, dark_theme: !settings.dark_theme})
+  }
+  const className = settings.dark_theme ? "dark" : "light"
+
+  return(
+    <div className={className}>
+       <h1>{settings.title}</h1> 
+       <button onClick={handleToggleClick}>Toggle theme</button>
+    </div>
+  )
+}
+
+//---------------------------------------------------------
+
+//* Person age
+
+import React, {useState} from "react"
+import {render} from "react-dom"
+
+const Person = () => {
+  const [user, setUser] = useState(sampleUser)
+
+  function handleIncrementClick() {
+    setUser({...user, age: user.age + 1})
+  }
+
+  function handleResetClick() {
+    setUser(sampleUser)
+  }
+  
+
+  return (
+    <>
+     <p>{user.first_name} is {user.age} years old</p>
+      <button onClick={handleIncrementClick}>Increment age</button>
+      <button onClick={handleResetClick}>Reset</button>
+    </>
+  )
+}
+
+const sampleUser = {
+    id: 1,
+    first_name: "Tylor",
+    age: 26
+}
+
+render(<Person />, document.querySelector("#react-root"))
+
+ 
+//---------------------------------------------------------
+
+//* Order insurance
+
+import React, {useState} from 'react'
+import {render} from 'react-dom'
+
+const OrderInsurance = () => {
+  const [order, setOrder] = useState({
+    id: 1,
+    items: [1, 4, 10]
+  })
+
+  function handleAddClick() {
+    setOrder({...order, insurance: "basic"})
+  }
+
+  function handleRemoveClick() {
+    const {insurance, ...modifiedOrder} = order
+    setOrder(modifiedOrder)
+  }
+
+  return (
+    <>
+      <h1>Your order</h1>
+      {order.insurance ? <p>Order is insured</p> : <p>Order is not insured</p>}
+      <button disabled={order.insurance === "basic"} onClick={handleAddClick}>Add insurance</button>
+      <button disabled={order.insurance === undefined} onClick={handleRemoveClick}>Remove insurance</button>
+    </>
+  )
+}
+
+render(<OrderInsurance />, document.querySelector("#react-root"))
+
+//---------------------------------------------------------
+
