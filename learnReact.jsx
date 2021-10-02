@@ -1805,3 +1805,275 @@ render(<OrderInsurance />, document.querySelector("#react-root"))
 
 //---------------------------------------------------------
 
+//* User age
+
+import React from 'react'
+import {render} from 'react-dom'
+
+const User = ({age}) => {
+  return <form>
+    <input type="number" defaultValue={age} name />
+  </form>
+}
+
+render(<>
+  <User age={26} />
+  <User age={23} />
+</>, document.querySelector("#react-root"))
+
+
+//---------------------------------------------------------
+
+//* Log the name
+
+import React from 'react'
+import {render} from 'react-dom'
+
+const Checkout = () => {
+  return (
+    <form>
+      <input type="text" name="name" onChange={event => console.log(event.target.value)} />
+    </form>
+  )
+}
+
+render(<Checkout />, document.querySelector("#react-root"))
+
+//---------------------------------------------------------
+
+//* Controlled input I
+
+import React, {useState} from "react"
+import {render} from "react-dom"
+
+const App = () => {
+  const [text, setText] = useState("")
+
+  return(
+    <>
+       <input type="text" name="name" value={text} onChange={event => setText(event.target.value)}/>        
+      <p>Hello {text}</p>
+    </>
+  )
+}
+
+render(<App />, document.querySelector("#react-root"))
+
+//---------------------------------------------------------
+
+//* Controlled input II
+
+import React, {useState} from "react"
+import {render} from 'react-dom'
+
+const App = () => {
+  const [quantity, setQuantity] = useState(0)
+
+  return (
+    <>
+      <input type="text" name="name" value={quantity} onChange={event => setQuantity(event.target.value)} />
+      <p>Ordering {quantity} items</p>
+    </>
+  )
+}
+
+render(<App />, document.querySelector("#react-root"))
+
+//---------------------------------------------------------
+
+//* Registration form 
+
+import React, {useState} from "react"
+import {render} from "react-dom"
+
+const RegisterForm = () => {
+    const [name, setName] = useState("")
+    const [type, setType] = useState("")
+    const [motivation, setMotivation] = useState("")
+
+    return <form>
+      <input type="text" name="name" value={name} placeholder="Enter your name" onChange={e => setName(e.target.value)}/>
+      
+      <select name="type" value={type} defaultValue="Type" onChange={e => setType(e.target.value)}>
+        <option value="Choose a type">Choose a type</option>
+        <option value="client">client</option>
+        <option value="merchant">merchant</option>
+      </select>
+      
+      <textarea name="motivation" value={motivation} placeholder="Your motivation to join"  onChange={e => setMotivation(e.target.value)} />
+     
+      <input type="submit" name="register" value="Register" />
+      
+      <p>Your name is {name}. You would like to register as {type} because {motivation}.</p>
+    </form>
+}
+
+render(<RegisterForm />, document.getElementById("react-root"))
+
+//---------------------------------------------------------
+
+//* Accessible Form II
+
+import React, {useState} from "react"
+import {render} from "react-dom"
+
+const RegisterForm = () => {
+  const [text, setText] = useState("")
+  const [type, setType] = useState("")
+  const [motivation, setMotivation] = useState("")
+
+  return(<> <form >
+    <label htmlFor="text">Name: </label>
+    <input type="text" id="text" value={text} placeholder="Enter your name" onChange={e => setText(e.target.value)} />
+    <label htmlFor="type">Type: </label>
+    <select name="type" id="type" value={type} onChange={e => setType(e.target.value)}>
+      <option value="">Choose a type</option>
+      <option value="merchant">merchant</option>
+      <option value="client">client</option>
+    </select>
+    <label htmlFor="motivation">Motivation: </label>
+    <textarea name="motivation" id="motivation" placeholder="Your motivation to join" value={motivation} onChange={e => setMotivation(e.target.value)} />
+    <input type="submit" value="Register" />
+  </form> 
+  <p>Your name is {text}. You would like to register as {type} because {motivation}.</p> </>)
+}
+
+render(<RegisterForm />, document.getElementById("react-root"))
+
+
+//---------------------------------------------------------
+
+//* Online Store Admin
+
+//? index.js
+
+import React, {useState} from "react"
+import {render} from "react-dom"
+import StoreFront from "./StoreFront.js"
+
+const App = () => {
+  return <StoreFront /> 
+}
+
+render(<App />, document.querySelector("#react-root"))
+
+//? Product.js
+
+//? StoreFront.js
+
+import React, {useState} from "react"
+import Product from "./Product.js"
+
+const StoreFront = () => {
+  const [products, setProducts] = useState([])
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("")
+  const [validation, setValidation] = useState("")
+
+  function handleFormSubmit(e) {
+    e.preventDefault()
+
+    if(!name && !description) {
+      setValidation("Please enter your name and description")
+      return
+    }
+    if(!name) {
+      setValidation("Please enter your name")
+      return 
+    }
+    if(!description) {
+      setValidation("Please enter your description")
+      return
+    }
+
+    setProducts([...products, {
+      id: products.length + 1,
+      name,
+      description
+    }])
+
+    setName("")
+    setDescription()
+  }
+
+  function handleDeleteButton(deleteId) {
+    setProducts(products.filter(product=> product.id !== deleteId))
+  }
+
+  return(<>
+    <form>
+      <div>
+        <label htmlFor="name-form">Name:</label>
+        <input type="text" id="name-form" placeholder="Enter the name" value={name} onChange={e => setName(e.target.value)} />
+      </div>
+      <div>
+        <label htmlFor="description-form">Description:</label>
+        <input type="text" id="description-form" placeholder="Enter the description" value={description} onChange={e => setDescription(e.target.value)} />
+      </div>
+      <div className="form-footer">
+        <div className="validation-message">{validation}</div>
+        <button type="submit" onClick={handleFormSubmit}>Add Product</button>
+      </div>
+    </form> 
+    <div>Add your first product</div>
+    <ul>
+      {products.map(product => <li key={product.id}>
+        <Product details={product}/>
+        <button onClick={() => handleDeleteButton(product.id)}>Delete</button>
+      </li>)}
+    </ul>
+  </>)
+}
+
+
+//---------------------------------------------------------
+
+//* Passing Functions 
+
+//? index.js
+
+import React from 'react'
+import {render} from 'react-dom'
+import Card from './Card.js'
+
+const App = () => {
+
+  function handleCardLoad() {
+    console.log("Card has loaded")
+  }
+
+  return <Card onCardLoad={handleCardLoad} />
+}
+
+render(<App />, document.querySelector("#react-root"))
+
+//? Card.js
+
+import React from 'react'
+
+const Card = (props) => {
+  if (props.onCardLoad) {
+    props.onCardLoad()
+  }
+
+  return <div className={"card"}>Card content here</div>
+}
+
+//---------------------------------------------------------
+
+//* Calling passed functions
+
+import React from "react"
+import {render} from "react-dom"
+import Card from "./Card.js"
+
+const App = () => {
+
+  function handleCardClick() {
+    console.log("Card got clicked")
+  }
+
+  return <Card onCardClick={handleCardClick} />
+}
+
+render(<App />, document.getElementById("react-root"))
