@@ -2063,6 +2063,7 @@ const Card = (props) => {
 
 //* Calling passed functions
 
+//? index.js
 import React from "react"
 import {render} from "react-dom"
 import Card from "./Card.js"
@@ -2077,3 +2078,54 @@ const App = () => {
 }
 
 render(<App />, document.getElementById("react-root"))
+
+//? Card.js
+import React from "react"
+
+const Card = ({onCardClick}) => {
+  return <div>
+    <button onClick={onCardClick}>Click me</button>
+  </div>
+}
+
+export default Card
+
+//---------------------------------------------------------
+
+//* Refactoring Form I
+
+import React, {useState} from "react"
+import {render} from "react-dom"
+import EmailForm from "./EmailForm.js"
+
+const App = () => {
+  const [email, setEmail] = useState("")
+
+  function handleEmailChange(event) {
+    setEmail(event.target.value)
+  }
+
+  return(
+    <div>
+      <h2>Logged in as {email}</h2>
+      <EmailForm email={email} onEmailChange={handleEmailChange} />
+    </div>
+  )
+}
+
+render(<App />, document.querySelector("#react-root"))
+
+//? EmailForm.js
+
+import React from "react"
+
+const EmailForm = ({email, onEmailChange}) => {
+  return ( 
+    <form>
+      <label htmlFor="email-form">Email: </label>
+      <input type="email" id="email-form" value={email} onChange={onEmailChange} />
+    </form>
+  )
+}
+
+export default EmailForm
